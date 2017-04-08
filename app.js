@@ -1,22 +1,37 @@
 var express = require('express');
 var app = express();
-var SearchService = require('./src/service/SearchService');
+
+const SearchService = require('./src/service/SearchService');
 
 app.get('/api/:store/:appname', function (req, res) {
-    let service = new SearchService();
+    let store = req.params.store;
+    let appname = req.params.appname;
+    let search = new SearchService();
 
-    if (req.params.store === 'google') {
-        service.google(req.params.appname)
+    if (store === 'google') {
+        search.google(req.params.appname)
             .then(app => res.json(app))
             .catch(error => res.status(error.status).json(error));
-    } else if (req.params.store === 'apple') {
-        let result = service.apple(req.params.appname);
-        res.send('Hello World! ' + result);
+
+    } else if (store === 'apple') {
+        search.apple(appname)
+            .then(ranking => res.send(ranking))
+            .catch(err => {
+                res.status(500).send({
+                    status: 'ERROR',
+                    message: 'Unable to retreive results for store=' + store + ' and appname=' + appname,
+                    error: err
+                });
+            });
+
     } else {
-        res.send('Hello World!  ');
+        res.send({
+            status: 'NO_SEARCH_SERVICE',
+            message: 'No search service for ' + req.params.store
+        });
     }
 });
 
 app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
+    console.log('asc-search listening on port 3000!');
 });
