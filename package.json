@@ -4,6 +4,7 @@
   "description": "Appsamurai - App Store Crawler",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,5 +12,9 @@
     "url": "\u0016https://github.com/wfuertes/asc-search.git"
   },
   "author": "Willian, \u001b[D\u001b[D F. Batista; Luiz Paro",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "express": "^4.15.2"
+  }
 }
