@@ -1,0 +1,15 @@
+{
+  "name": "asc-search",
+  "version": "1.0.0",
+  "description": "Appsamurai - App Store Crawler",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "\u0016https://github.com/wfuertes/asc-search.git"
+  },
+  "author": "Willian, \u001b[D\u001b[D F. Batista; Luiz Paro",
+  "license": "Apache-2.0"
+}
