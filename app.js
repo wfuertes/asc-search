@@ -6,8 +6,9 @@ app.get('/api/:store/:appname', function (req, res) {
     let service = new SearchService();
 
     if (req.params.store === 'google') {
-        let result = service.google(req.params.appname);
-        res.send('Hello World! ' + result);
+        service.google(req.params.appname)
+            .then(app => res.json(app))
+            .catch(error => res.status(error.status).json(error));
     } else if (req.params.store === 'apple') {
         let result = service.apple(req.params.appname);
         res.send('Hello World! ' + result);

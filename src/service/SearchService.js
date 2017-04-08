@@ -1,8 +1,10 @@
+let GooglePlayService = require('./GooglePlayService');
+
 class SearchService {
     
     google(appname) {
-        console.log('google search');
-        return 'google search: ' + appname;
+        let googlePlayService = new GooglePlayService();
+        return googlePlayService.findApp(appname);
     }
 
     apple(appname) {
