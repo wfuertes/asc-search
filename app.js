@@ -3,6 +3,9 @@ var app = express();
 
 const SearchService = require('./src/service/SearchService');
 
+
+app.use(express.static('public'))
+
 app.get('/api/:store/:appname', function (req, res) {
     let store = req.params.store;
     let appname = req.params.appname;
