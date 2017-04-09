@@ -4,14 +4,17 @@ var uuidV4 = require('uuid/v4');
 
 const NormalizeHelper = require('../helpers/NormalizeHelper');
 
-class GooglePlayService {
+const rankingCache = new Map();
+setInterval(function() { 
+    console.log("Erasing cache ...");
+    rankingCache.clear(); 
+}, 1000 * 3600);
 
-    findApp(appname) {
-        return new Promise((resolve, reject) => {
-            // TODO: alterar pesquisa para free apps para ficar igual a da apple store 
-            // https://play.google.com/store/apps/collection/topselling_free?hl=en_US
-            // https://play.google.com/store/apps/collection/topgrossing?hl=en_US
-            // https://play.google.com/store/apps/category/GAME/collection/topselling_free
+const getAppRanking = (url) => {
+    if (rankingCache.has(url)) {
+        return Promise.resolve(rankingCache.get(url));
+    } else {
+        let googleData = new Promise(resolve => {
             request('https://play.google.com/store/apps/collection/topselling_free?hl=en_US', (error, response, body) => {
                 if (error) {
                     console.log(`Error: ${error}`);
@@ -77,47 +80,67 @@ class GooglePlayService {
                     });
                 }));
 
-                details.then(apps => {
-                    console.log('aqui');
-
-                    // category map and score at top 60
-                    let categoryMap = new Map();
-                    apps.forEach(app => {
-                        let categoryName = app.ranking.category.name;
-                        if (!categoryMap.has(categoryName)) {
-                            categoryMap.set(categoryName, []);
-                        }
-                        categoryMap.get(categoryName).push(app);
-                    });
-
-                    for (let [key, value] of categoryMap) {
-                        value.sort((a, b) => {
-                            return a.ranking.overall > b.ranking.overall ? +1 : -1;
-                        });
-
-                        value.forEach((app, index) => {
-                            app.ranking.category.value = index + 1;
-                        });
-                    }
-
-                    // making the search
-                    let app = apps.find(app => {
-                        let siteName = NormalizeHelper.normalize(app.name);
-                        let searchedName = NormalizeHelper.normalize(appname);
-
-                        // console.log(`${siteName}=${searchedName}`);
-                        return siteName.indexOf(searchedName) === 0;
-                    });
-
-                    if (app) {
-                        app.status = 'FOUND';
-                    }
-                    
-                    resolve(app ? app : { status: 'NOT_FOUND' });
-                });
-
+                resolve(details.then(apps => {
+                    rankingCache.set(url, apps);
+                    return apps;
+                }));
             });
         });
+        return googleData;
+    }
+}
+
+class GooglePlayService {
+
+    findApp(appname) {
+        return new Promise((resolve, reject) => {
+            // TODO: alterar pesquisa para free apps para ficar igual a da apple store 
+            // https://play.google.com/store/apps/collection/topselling_free?hl=en_US
+            // https://play.google.com/store/apps/collection/topgrossing?hl=en_US
+            // https://play.google.com/store/apps/category/GAME/collection/topselling_free
+
+            let url = 'https://play.google.com/store/apps/collection/topselling_free?hl=en_US';
+
+            getAppRanking(url).then(apps => {
+
+                // category map and score at top 60
+                let categoryMap = new Map();
+                apps.forEach(app => {
+                    let categoryName = app.ranking.category.name;
+                    if (!categoryMap.has(categoryName)) {
+                        categoryMap.set(categoryName, []);
+                    }
+                    categoryMap.get(categoryName).push(app);
+                });
+
+                for (let [key, value] of categoryMap) {
+                    value.sort((a, b) => {
+                        return a.ranking.overall > b.ranking.overall ? +1 : -1;
+                    });
+
+                    value.forEach((app, index) => {
+                        app.ranking.category.value = index + 1;
+                    });
+                }
+
+                // making the search
+                let app = apps.find(app => {
+                    let siteName = NormalizeHelper.normalize(app.name);
+                    let searchedName = NormalizeHelper.normalize(appname);
+
+                    // console.log(`${siteName}=${searchedName}`);
+                    return siteName.indexOf(searchedName) === 0;
+                });
+
+                if (app) {
+                    app.status = 'FOUND';
+                }
+
+                resolve(app ? app : { status: 'NOT_FOUND' });
+            });
+
+        });
+
     }
 }
 
