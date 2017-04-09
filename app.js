@@ -3,7 +3,6 @@ var app = express();
 
 const SearchService = require('./src/service/SearchService');
 
-
 app.use(express.static('public'))
 
 app.get('/api/:store/:appname', function (req, res) {
@@ -35,6 +34,8 @@ app.get('/api/:store/:appname', function (req, res) {
     }
 });
 
-app.listen(3000, function () {
+let PORT = process.env.PORT || 3000;
+
+app.listen(PORT, function () {
     console.log('asc-search listening on port 3000!');
 });
