@@ -39,7 +39,7 @@ It returns the following information:
 
 Heroku: https://asc-search.herokuapp.com/
 
-Video: TODO - por link do video aqui
+Video: https://youtu.be/_zzPY4O9l_s
 
 # Technologies used
 
