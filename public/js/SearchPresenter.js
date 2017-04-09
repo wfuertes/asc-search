@@ -20,6 +20,7 @@ function rankingTable(app) {
             <tr>
                 <th>Icon</th>
                 <th>App</th>
+                <th>Description</th>
                 <th>Overall</th>
                 <th>Category</th>
             </tr>
@@ -28,8 +29,12 @@ function rankingTable(app) {
                     <img src="${app.icon}" />
                 </td>
                 <td>${app.name}</td>
-                <td>${app.ranking.overall}</td>
-                <td>${app.ranking.category.name}:${app.ranking.category.value}</td>
+                <td>${app.description}</td>
+                <td style="text-align:center; font-size: 32px">${app.ranking.overall}</td>
+                <td style="text-align:center">
+                    <div>${app.ranking.category.name}</div>
+                    <div style="font-size: 32px">${app.ranking.category.value}</div>
+                </td>
             </tr>
         </table>
     `;

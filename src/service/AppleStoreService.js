@@ -8,7 +8,7 @@ class AppleStoreService {
 
     findApp(appname) {
         let result = new Promise(resolve => {
-            request('http://www.apple.com/br/itunes/charts/free-apps', (error, response, body) => {
+            request('http://www.apple.com/itunes/charts/free-apps', (error, response, body) => {
                 resolve(body);
             });
         });
