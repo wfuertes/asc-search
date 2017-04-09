@@ -3,19 +3,24 @@
 <head>
 <title>ASC-SEARCH</title>
 <link rel="stylesheet" href="/css/main.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 
 <body>
-    <h1> Welcome to ASC-SEARCH</h1>
-    <form>
-        <select id="store">
-            <option value="apple">Apple Store</option>
-            <option value="google">Play Store</option>
-        </select>
-        <input id="appname" type="text" name="appname" />
-        <button onclick="findApp()">Search</button>
-    <form>
-    <div id="ranking"></div>
+    <div id="all">
+        <h1> Welcome to ASC-SEARCH</h1>
+        <form>
+            <select id="store">
+                <option value="apple">Apple Store</option>
+                <option value="google">Play Store</option>
+            </select>
+            <input id="appname" type="text" name="appname" />
+            <button onclick="findApp()">Search</button>
+            <div id="loader"></div>
+        </form>
+        <div id="ranking"></div>
+        
+    </div>
 
     <script src="/js/SearchPresenter.js"></script>
 </body>

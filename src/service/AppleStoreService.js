@@ -62,7 +62,7 @@ class AppleStoreService {
                 let siteName = NormalizeHelper.normalize(app.name);
                 let searchedName = NormalizeHelper.normalize(appname);
 
-                console.log(`${siteName}=${searchedName}`);
+                // console.log(`${siteName}=${searchedName}`);
                 return siteName.indexOf(searchedName) === 0;
             });
 

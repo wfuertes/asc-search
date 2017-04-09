@@ -1,4 +1,38 @@
-table, td, th {    
+html {
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    padding-left: 15%;
+    padding-right: 15%;
+    text-align: center; 
+}
+
+div#all {
+    text-align: left;
+    margin: auto;
+}
+
+h1 {
+    border-bottom: 2px solid black; 
+}
+
+#store {
+    height: 32px;
+}
+
+#appname {
+    margin-left: 5px; 
+    height: 26px;
+}
+
+button {
+    margin-left: 5px; 
+    height: 32px;
+}
+
+table, td, th {
+    margin-top: 20px;     
     border: 1px solid #ddd;
     text-align: left;
 }
@@ -10,4 +44,40 @@ table {
 
 th, td {
     padding: 15px;
+}
+
+.not-found {
+    margin-top: 20px;
+    font-size: 16px;
+    color: lightcoral;
+}
+
+#loader {
+    display: inline-flex;
+    height: 32px;
+    position: relative;
+}
+
+.loader {
+  position: relative;
+  top: 8px;
+  left: 15px;
+  display: inline-flex;
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid #3498db;
+  width: 24px;
+  height: 24px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
